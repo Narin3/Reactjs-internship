@@ -1,20 +1,21 @@
-.App {
+.AfterSubmit {
   text-align: center;
 }
 
 
-.App-header {
-  background-color: black;
+.AfterSubmit {
+  background-color: #008000;
   height: 50px;
   padding: 20px;
-  color: white;
+  color: Black;
   text-align: center;
 }
 
-.App-title {
+.AfterSubmit-title {
   font-size: 1.5em;
 }
 
-.App-intro {
+.AfterSubmit-intro {
   font-size: large;
+
 }
