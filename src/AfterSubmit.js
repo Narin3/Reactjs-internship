@@ -1,8 +1,10 @@
 import React from 'react'
 import './AfterSubmit.css'
-import PageTransition from 'react-router-page-transition'
+import App from './App'
+import { connect } from 'react-redux'
+import { userAppRequest } from './actions/appActions.js'
 
-export default class AfterSubmit extends React.Component {
+class AfterSubmit extends React.Component {
   constructor(props) {
     super(props)
     this.state= {}
@@ -21,16 +23,21 @@ componentDidMount() {
 }
 
 render() {
+  const { userAppRequest } = this.props
   return(
     <div id="AfterSubmit" className="AfterSubmit-header">
+    <App userAppRequest={userAppRequest} />
        <header className="AfterSubmit-header">
-         <h1>Congratulaions</h1>
-           </header>
-        <p>Name: { this.props.location.state.info.name } </p>
-        <p>Surname: { this.props.location.state.info.surname } </p>
-        <p>Email: { this.props.location.state.info.email } </p>
-        <p>Address: { this.props.location.state.info.address } </p>
+           <h1>Congratulaions</h1>
+          <p>Name: { this.state.name } </p>
+          <p>Surname: { this.state.surname } </p>
+          <p>Email: { this.state.email } </p>
+          <p>Address: { this.state.address } </p>
+        </header>
       </div>
     )
   }
 }
+
+
+export default connect(null, { userAppRequest })(AfterSubmit)
