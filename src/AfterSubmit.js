@@ -1,14 +1,11 @@
 import React from 'react'
 import './AfterSubmit.css'
-import App from './App'
 import { connect } from 'react-redux'
-import { userAppRequest } from './actions/appActions.js'
+
 
 class AfterSubmit extends React.Component {
   constructor(props) {
     super(props)
-    this.state= {}
-
   }
 
 componentDidMount() {
@@ -23,21 +20,28 @@ componentDidMount() {
 }
 
 render() {
-  const { userAppRequest } = this.props
   return(
     <div id="AfterSubmit" className="AfterSubmit-header">
-    <App userAppRequest={userAppRequest} />
        <header className="AfterSubmit-header">
-           <h1>Congratulaions</h1>
+           <h1>Congratulaitons</h1>
+                 </header>
           <p>Name: { this.state.name } </p>
           <p>Surname: { this.state.surname } </p>
           <p>Email: { this.state.email } </p>
           <p>Address: { this.state.address } </p>
-        </header>
       </div>
     )
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    Name: state.register.Name,
+    Surname: state.register.Surname,
+    Email: state.register.Email,
+    Address: state.register.Address
+  }
+}
 
-export default connect(null, { userAppRequest })(AfterSubmit)
+
+export default connect(mapStateToProps)(AfterSubmit)

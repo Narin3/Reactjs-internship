@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
-import { browserHistory, Router, Route, Link } from 'react-router';
+import React from 'react';
+import { browserHistory, Link } from 'react-router';
+import { connect } from 'react-redux'
+import { push } from "react-router-redux"
 import './App.css';
 
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
 
@@ -16,17 +18,18 @@ export default class App extends React.Component {
     }
   }
 
-  handleInputChange(event) {
+  handleChange(event) {
     const { name, value }  = event.target
     this.setState({
       [name]: value
     })
+    this.props.updateApp(e.target.name, e.target.value)
   }
 
   handleSubmit(event) {
     this.setState({ isSubmitted: true })
     event.preventDefault()
-    this.props.userAppRequest(this.state)
+    this.props.Registration(this.state)
     const path = `/aftersubmit`
     browserHistory.push({pathname: path, state: this.state})
   }
@@ -38,22 +41,18 @@ export default class App extends React.Component {
          <header className="App-header">
            <h1>Register here</h1>
              <h4>Fill the Form</h4>
-              <form onSubmit={ (e) => this.handleSubmit(e) } className="form-elements">
+              <form onSubmit={ (e) => this.handleSubmit(e) } className="flex">
                 <p>
-                  Name:
-                  <input type="text" value={this.state.name} name="name" onChange={ (e) => this.handleInputChange(e) } />
+                  <input type="text" value={this.state.name} name="name" placeholder="Name" onChange={ (e) => this.handleChange(e) } />
                 </p>
                 <p>
-                  Surname:
-                  <input type="text" value={this.state.surname} name="surname" onChange={ (e) => this.handleInputChange(e) } />
+                  <input type="text" value={this.state.surname} name="surname" placeholder="Surname" onChange={ (e) => this.handleChange(e) } />
                 </p>
                 <p>
-                  Email:
-                  <input type="text" value={this.state.email} name="email" onChange={ (e) => this.handleInputChange(e) } />
+                  <input type="text" value={this.state.email} name="email" placeholder="Email" onChange={ (e) => this.handleChange(e) } />
                 </p>
                 <p>
-                  Address:
-                  <input type="text" value={this.state.address} name="address" onChange={ (e) => this.handleInputChange(e) } />
+                  <input type="text" value={this.state.address} name="address" placeholder="Address" onChange={ (e) => this.handleChange(e) } />
                 </p>
                 <Link to={{ pathname: '/aftersubmit', state: { info: this.state }}}><input type="submit" value="Submit" /></Link>
               </form>
@@ -61,4 +60,21 @@ export default class App extends React.Component {
       </div>
     );
   }
+};
+
+const state = (state.ownProps = {}) => {
+  return {
+    Name: state.register.Name,
+    Surname: state.register.Surname,
+    Email: state.register.Email,
+    Address: state.register.Address
+  }
 }
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  updateApp: (key, value) => {
+    dispatch( { type: "REGISTER_FORM_UPDATE", key, value })
+  }
+})
+
+export default connect(state, mapDispatchToProps)(App)
